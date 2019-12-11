@@ -91,7 +91,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <body>
 
 	<!-- header Start-->
-	<jsp:include page="header.jsp" />
+	<jsp:include page="headerWithoutSlider.jsp" />
 	<!-- header End-->
 
 	<!-- sign up form -->

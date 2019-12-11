@@ -67,7 +67,7 @@ public class UserServlet extends HttpServlet {
 			}
 		} else {
 			req.setAttribute("msg", "Login failed..");
-			req.getRequestDispatcher("/signin.jsp").forward(req, resp);
+			req.getRequestDispatcher("/home/signin.jsp").forward(req, resp);
 		}
 	}
 

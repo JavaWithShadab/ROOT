@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import beans.Offer;
 import db.DBConnection;
 
@@ -15,15 +17,15 @@ public class OfferRepository {
 
 	public static Offer findOffer(long id) {
 
-		String select = "SELECT * FROM offers WHERE id=?";
+		String select = "SELECT * FROM offers WHERE id=? AND is_expired=?";
 
 		Offer offer = null;
 
-		try (Connection connection = DBConnection.getConnection();) {
-
-			PreparedStatement ps = connection.prepareStatement(select);
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement ps = connection.prepareStatement(select);) {
 
 			ps.setLong(1, id);
+			ps.setString(2, "false");
 
 			ResultSet rs = ps.executeQuery();
 
@@ -35,14 +37,14 @@ public class OfferRepository {
 				offer.setId(rs.getLong("id"));
 				offer.setDescription(rs.getString("description"));
 
+				offer.setExpired(Boolean.valueOf(rs.getString("is_expired")));
+
 				LocalDate expiryDate = LocalDate.parse(rs.getString("expiryDate"));
 				offer.setExpiryDate(expiryDate);
 
 			}
 
 			rs.close();
-
-			ps.close();
 
 		} catch (SQLException e) {
 
@@ -55,15 +57,15 @@ public class OfferRepository {
 
 	public static Offer findOfferByProductId(long productId) {
 
-		String select = "SELECT * FROM offers WHERE product_id=?";
+		String select = "SELECT * FROM offers WHERE product_id=? AND is_expired=?";
 
 		Offer offer = null;
 
-		try (Connection connection = DBConnection.getConnection();) {
-
-			PreparedStatement ps = connection.prepareStatement(select);
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement ps = connection.prepareStatement(select);) {
 
 			ps.setLong(1, productId);
+			ps.setString(2, "false");
 
 			ResultSet rs = ps.executeQuery();
 
@@ -74,15 +76,13 @@ public class OfferRepository {
 				offer.setProductId(rs.getLong("product_id"));
 				offer.setId(rs.getLong("id"));
 				offer.setDescription(rs.getString("description"));
-
+				offer.setExpired(Boolean.valueOf(rs.getString("is_expired")));
 				LocalDate expiryDate = LocalDate.parse(rs.getString("expiryDate"));
 				offer.setExpiryDate(expiryDate);
 
 			}
 
 			rs.close();
-
-			ps.close();
 
 		} catch (SQLException e) {
 
@@ -95,13 +95,14 @@ public class OfferRepository {
 
 	public static List<Offer> getAllOffers() {
 
-		String select = "SELECT * FROM offers";
+		String select = "SELECT * FROM offers WHERE is_expired=?";
 
 		List<Offer> offers = new ArrayList<Offer>();
 
-		try (Connection connection = DBConnection.getConnection();) {
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement ps = connection.prepareStatement(select);) {
 
-			PreparedStatement ps = connection.prepareStatement(select);
+			ps.setString(1, "false");
 
 			ResultSet rs = ps.executeQuery();
 
@@ -111,6 +112,7 @@ public class OfferRepository {
 
 				offer.setId(rs.getLong("id"));
 				offer.setDescription(rs.getString("description"));
+				offer.setExpired(Boolean.valueOf(rs.getString("is_expired")));
 
 				LocalDate expiryDate = LocalDate.parse(rs.getString("expiryDate"));
 				offer.setExpiryDate(expiryDate);
@@ -118,10 +120,6 @@ public class OfferRepository {
 				offers.add(offer);
 
 			}
-
-			rs.close();
-
-			ps.close();
 
 		} catch (SQLException e) {
 
@@ -136,21 +134,19 @@ public class OfferRepository {
 
 		boolean isSucces = false;
 
-		String insert = "INSERT INTO offers (description, expiryDate, product_id) VALUES (?,?,?)";
+		String insert = "INSERT INTO offers (description, expiryDate, product_id, is_expired) VALUES (?,?,?,?)";
 
-		try (Connection connection = DBConnection.getConnection();) {
-
-			PreparedStatement ps = connection.prepareStatement(insert);
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement ps = connection.prepareStatement(insert);) {
 
 			ps.setString(1, offer.getDescription());
 			ps.setString(2, offer.getExpiryDate().toString());
 			ps.setLong(3, offer.getProductId());
+			ps.setString(4, "false");
 
 			ps.executeUpdate();
 
 			isSucces = true;
-
-			ps.close();
 
 		} catch (SQLException e) {
 
@@ -170,17 +166,14 @@ public class OfferRepository {
 		} else {
 			String update = "UPDATE offers SET description=? , expiryDate=? WHERE id=?";
 
-			try (Connection connection = DBConnection.getConnection();) {
-
-				PreparedStatement ps = connection.prepareStatement(update);
+			try (Connection connection = DBConnection.getConnection();
+					PreparedStatement ps = connection.prepareStatement(update);) {
 
 				ps.setString(1, offer.getDescription());
 				ps.setString(2, offer.getExpiryDate().toString());
 				ps.setLong(3, offer.getId());
 
 				ps.executeUpdate();
-
-				ps.close();
 
 			} catch (SQLException e) {
 
@@ -190,19 +183,34 @@ public class OfferRepository {
 
 	}
 
+	public static void exipredOffer(Offer offer) {
+
+		String update = "UPDATE offers SET is_expired=? WHERE id=?";
+
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement ps = connection.prepareStatement(update);) {
+
+			ps.setString(1, "true");
+
+			ps.setLong(2, offer.getId());
+
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+	}
+
 	public static void deleteOffer(long id) {
 
 		String delete = "DELETE FROM offers WHERE id=?";
 
-		try (Connection connection = DBConnection.getConnection();) {
-
-			PreparedStatement ps = connection.prepareStatement(delete);
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement ps = connection.prepareStatement(delete);) {
 
 			ps.setLong(1, id);
-
 			ps.executeUpdate();
-
-			ps.close();
 
 		} catch (SQLException e) {
 

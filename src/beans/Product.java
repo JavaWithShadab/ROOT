@@ -1,6 +1,10 @@
 package beans;
 
 import java.io.Serializable;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 
 import db.repo.OfferRepository;
 import db.repo.UserRepository;
@@ -112,9 +116,65 @@ public class Product implements Serializable {
 	}
 
 	public Offer getOffer() {
-		
+
 		offer = OfferRepository.findOfferByProductId(id);
+
+		if (offer != null && (!offer.getExpired())) {
+			LocalDate exipryDate = offer.getExpiryDate();
+
+			LocalDateTime localDateTime1 = exipryDate.atTime(23, 59, 59);
+			LocalDateTime now = LocalDateTime.now();
+
+			Period period = getPeriod(now, localDateTime1);
+			long[] hms = getTime(now, localDateTime1);
+			int days = period.getDays();
+
+			remainingTime = "";
+
+			if (days < 0) {
+
+				OfferRepository.exipredOffer(offer);
+
+			} else {
+
+				if (days > 0) {
+					remainingTime = remainingTime + days + " Day(s) ";
+				}
+				if (hms[0] > 0) {
+					remainingTime = remainingTime + hms[0] + " hour(s) ";
+				}
+				if (hms[1] > 0) {
+					remainingTime = remainingTime + hms[1] + " min(s) ";
+				}
+				if (hms[2] > 0) {
+					remainingTime = remainingTime + hms[2] + " sec(s)";
+				}
+			}
+
+		}
 		return offer;
+	}
+
+	private static Period getPeriod(LocalDateTime dob, LocalDateTime now) {
+		return Period.between(dob.toLocalDate(), now.toLocalDate());
+	}
+
+	private static long[] getTime(LocalDateTime dob, LocalDateTime now) {
+		LocalDateTime today = LocalDateTime.of(now.getYear(), now.getMonthValue(), now.getDayOfMonth(), dob.getHour(),
+				dob.getMinute(), dob.getSecond());
+		Duration duration = Duration.between(today, now);
+
+		long seconds = duration.getSeconds();
+
+		long hours = seconds / SECONDS_PER_HOUR;
+		long minutes = ((seconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
+		long secs = (seconds % SECONDS_PER_MINUTE);
+
+		return new long[] { hours, minutes, secs };
+	}
+
+	public String getRemainingTime() {
+		return remainingTime;
 	}
 
 	@Override
@@ -143,4 +203,10 @@ public class Product implements Serializable {
 	private String image5;
 	private long userId;
 	private String location;
+
+	private String remainingTime;
+
+	static final int MINUTES_PER_HOUR = 60;
+	static final int SECONDS_PER_MINUTE = 60;
+	static final int SECONDS_PER_HOUR = SECONDS_PER_MINUTE * MINUTES_PER_HOUR;
 }

@@ -145,7 +145,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<input type="hidden" value="SignIn" name="method"> <input
 							type="email" name="email" placeholder="Your Email" required="">
 						<input type="password" name="password" placeholder="Password"
-							required=""> <input type="submit" value="Sign In1">
+							required=""> <input type="submit" value="Sign In">
 
 					</form>
 

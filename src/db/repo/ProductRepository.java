@@ -19,9 +19,8 @@ public class ProductRepository {
 
 		Product product = new Product();
 
-		try (Connection connection = DBConnection.getConnection();) {
-
-			PreparedStatement ps = connection.prepareStatement(select);
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement ps = connection.prepareStatement(select);) {
 
 			ps.setLong(1, id);
 
@@ -34,8 +33,6 @@ public class ProductRepository {
 			}
 
 			rs.close();
-
-			ps.close();
 
 		} catch (SQLException e) {
 
@@ -52,12 +49,11 @@ public class ProductRepository {
 
 		List<Product> products = new ArrayList<Product>();
 
-		try (Connection connection = DBConnection.getConnection();) {
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement ps = connection.prepareStatement(select);
+				ResultSet rs = ps.executeQuery();)
 
-			PreparedStatement ps = connection.prepareStatement(select);
-
-			ResultSet rs = ps.executeQuery();
-
+		{
 			while (rs.next()) {
 
 				Product product = convertProductFromResultSet(rs);
@@ -66,11 +62,9 @@ public class ProductRepository {
 
 			}
 
-			rs.close();
+		} catch (
 
-			ps.close();
-
-		} catch (SQLException e) {
+		SQLException e) {
 
 			e.printStackTrace();
 		}
@@ -85,9 +79,8 @@ public class ProductRepository {
 
 		List<Product> products = new ArrayList<Product>();
 
-		try (Connection connection = DBConnection.getConnection();) {
-
-			PreparedStatement ps = connection.prepareStatement(select);
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement ps = connection.prepareStatement(select);) {
 
 			ps.setString(1, category);
 
@@ -103,8 +96,6 @@ public class ProductRepository {
 
 			rs.close();
 
-			ps.close();
-
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -112,32 +103,26 @@ public class ProductRepository {
 
 		return products;
 	}
-	
+
 	public static List<Product> getAllProductByLocation(String location) {
 
 		String select = "SELECT * FROM products WHERE location=?";
 
 		List<Product> products = new ArrayList<Product>();
 
-		try (Connection connection = DBConnection.getConnection();) {
-
-			PreparedStatement ps = connection.prepareStatement(select);
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement ps = connection.prepareStatement(select);) {
 
 			ps.setString(1, location);
 
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-
 				Product product = convertProductFromResultSet(rs);
-
 				products.add(product);
-
 			}
 
 			rs.close();
-
-			ps.close();
 
 		} catch (SQLException e) {
 
@@ -146,16 +131,15 @@ public class ProductRepository {
 
 		return products;
 	}
-	
+
 	public static List<Product> getAllProductByCategoryAndLocation(String category, String location) {
 
 		String select = "SELECT * FROM products WHERE category=? AND location=?";
 
 		List<Product> products = new ArrayList<Product>();
 
-		try (Connection connection = DBConnection.getConnection();) {
-
-			PreparedStatement ps = connection.prepareStatement(select);
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement ps = connection.prepareStatement(select);) {
 
 			ps.setString(1, category);
 			ps.setString(2, location);
@@ -166,14 +150,11 @@ public class ProductRepository {
 
 				Product product = convertProductFromResultSet(rs);
 
-				
 				products.add(product);
 
 			}
 
 			rs.close();
-
-			ps.close();
 
 		} catch (SQLException e) {
 
@@ -183,17 +164,14 @@ public class ProductRepository {
 		return products;
 	}
 
-
-
 	public static List<Product> getAllProduct(long userId) {
 
 		String select = "SELECT * FROM products WHERE user_id=?";
 
 		List<Product> products = new ArrayList<Product>();
 
-		try (Connection connection = DBConnection.getConnection();) {
-
-			PreparedStatement ps = connection.prepareStatement(select);
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement ps = connection.prepareStatement(select);) {
 
 			ps.setLong(1, userId);
 
@@ -209,8 +187,6 @@ public class ProductRepository {
 
 			rs.close();
 
-			ps.close();
-
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -225,9 +201,8 @@ public class ProductRepository {
 
 		String insert = "INSERT INTO products (category, title, description, image1, image2, image3, image4, image5, location, price, user_id) values (?,?,?,?,?,?,?,?,?,?,?)";
 
-		try (Connection connection = DBConnection.getConnection();) {
-
-			PreparedStatement ps = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement ps = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);) {
 
 			ps.setString(1, product.getCategory());
 			ps.setString(2, product.getTitle());
@@ -253,8 +228,6 @@ public class ProductRepository {
 				id = rs.getLong(1);
 			}
 
-			ps.close();
-
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -269,9 +242,8 @@ public class ProductRepository {
 
 		String insert = "UPDATE products SET category=?, title=?, description=?, image1=?, image2=?, image3=?, image4=?, image5=?, price=?, user_id=? WHERE id=?";
 
-		try (Connection connection = DBConnection.getConnection();) {
-
-			PreparedStatement ps = connection.prepareStatement(insert);
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement ps = connection.prepareStatement(insert);) {
 
 			ps.setString(1, product.getCategory());
 			ps.setString(2, product.getTitle());
@@ -292,8 +264,6 @@ public class ProductRepository {
 
 			isSucces = true;
 
-			ps.close();
-
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -306,15 +276,12 @@ public class ProductRepository {
 
 		String delete = "DELETE FROM products WHERE id=?";
 
-		try (Connection connection = DBConnection.getConnection();) {
-
-			PreparedStatement ps = connection.prepareStatement(delete);
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement ps = connection.prepareStatement(delete);) {
 
 			ps.setLong(1, id);
 
 			ps.executeUpdate();
-
-			ps.close();
 
 		} catch (SQLException e) {
 

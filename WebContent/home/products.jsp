@@ -33,7 +33,31 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="application/x-javascript">
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
  addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </script>
@@ -146,68 +170,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- //switcher-grid and list alignment -->
 
 <script type="text/javascript">
-	function onPageLoad() {
-
-		var expiryDateVal = document.getElementById("expiryDate").innerHTML;
-
-		var expiryDate = new Date(expiryDateVal);
-		var nowDate = new Date();
-
-		var miliSec = expiryDate.getTime() - nowDate.getTime();
-
-		var seconds = miliSec / 1000;
-		seconds = seconds.toFixed(2);
-
-		var minutes = seconds / 60;
-		minutes = minutes.toFixed(2);
-
-		var hours = minutes / 60;
-		hours = hours.toFixed(2);
-
-		var days = hours / 24;
-		days = days.toFixed(2);
-
-		/* var seconds = miliSec % 1000;
-		seconds=seconds.toFixed(2);
-		
-		var minutes = seconds % 60;
-		minutes=minutes.toFixed(2);
-		
-		var hours = minutes % 60;
-		hours=hours.toFixed(2);
-		
-		var days = hours % 24;
-		days=days.toFixed(2); */
-
-		if (seconds <= 0) {
-
-			return;
-		}
-
-		var msg = 'DO hurry, Offer will expire in ';
-
-		if (days > 0) {
-
-			msg = msg + '' + days + ' days ';
-		}
-
-		if (hours > 0) {
-
-			msg = msg + '' + hours + ' hours ';
-		}
-		if (minutes > 0) {
-
-			msg = msg + '' + minutes + ' minutes ';
-		}
-		if (seconds > 0) {
-
-			msg = msg + '' + seconds + ' seconds ';
-		}
-
-		document.getElementById("remainingTime").innerHTML = msg;
-
-	}
+	setTimeout(function() {
+		window.location.reload(1);
+	}, 59999);
 </script>
+
+<style type="text/css">
+.offer {
+	color: red;
+	font-size: 30px;
+}
+</style>
 </head>
 <body onload="onPageLoad()">
 
@@ -319,7 +292,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 												<c:forEach var="product" items="${products }">
 
-													<a href="single.html">
+													<a href="single.jsp?id=${ product.id }">
 														<li><img
 															src="${pageContext.request.contextPath}/uploads/${product.image1}"
 															title="" alt="" />
@@ -329,13 +302,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 																<p class="catpath">${product.description}</p>
 															</section>
 															<section class="list-right">
-															<span class="cityname">${product.offer.description}</span>
-																<span class="date" id="expiryDate">${product.offer.expiryDate}</span>
 																<span class="cityname">${product.user.city}</span>
 															</section>
-															<section class="list-right list-bottom">
+															<h4 id="remainingTime">
 
-																<h4 id="remainingTime"></h4>
+																<c:if test="${ product.offer.expired eq false}">
+																	<span class="offer">${product.offer.description}</span>
+																	<h5 style="color: red;">Offer Expire's in:</h5>
+																	<span style="color: blue;">${product.remainingTime}</span>
+
+																</c:if>
+															</h4>
 
 															</section>
 															<div class="clearfix"></div></li>
@@ -343,8 +320,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 												</c:forEach>
-
-
 
 											</ul>
 										</div>
@@ -373,7 +348,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<ul class="list">
 												<c:forEach var="product" items="${products }">
 
-													<a href="single.html">
+													<a href="single.jsp?id=${ product.id }">
 														<li><img
 															src="${pageContext.request.contextPath}/uploads/${product.image1}"
 															title="" alt="" />
@@ -383,8 +358,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 																<p class="catpath">${product.description}</p>
 															</section>
 															<section class="list-right">
-																<span class="date">${product.offer.expiryDate}</span> <span
-																	class="cityname">${product.user.city}</span>
+																<span class="cityname">${product.user.city}</span>
+															</section>
+															<h4 id="remainingTime">
+
+																<c:if test="${ product.offer.expired eq false}">
+																	<span class="offer">${product.offer.description}</span>
+																	<h5 style="color: red;">Offer Expire's in:</h5>
+																	<span style="color: blue;">${product.remainingTime}</span>
+
+																</c:if>
+															</h4>
+
 															</section>
 															<div class="clearfix"></div></li>
 													</a>
@@ -419,7 +404,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<ul class="list">
 												<c:forEach var="product" items="${products }">
 
-													<a href="single.html">
+													<a href="single.jsp?id=${ product.id }">
 														<li><img
 															src="${pageContext.request.contextPath}/uploads/${product.image1}"
 															title="" alt="" />
@@ -427,12 +412,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 																<h5 class="title">${product.title}</h5>
 																<span class="adprice">Rs ${product.price}</span>
 																<p class="catpath">${product.description}</p>
-
 															</section>
 															<section class="list-right">
-																<h5 class="title">${product.offer.description}</h5>
-																<span class="date">${product.offer.expiryDate}</span> <span
-																	class="cityname">${product.user.city}</span>
+																<span class="cityname">${product.user.city}</span>
+															</section>
+															<h4 id="remainingTime">
+
+																<c:if test="${ product.offer.expired eq false}">
+																	<span class="offer">${product.offer.description}</span>
+																	<h5 style="color: red;">Offer Expire's in:</h5>
+																	<span style="color: blue;">${product.remainingTime}</span>
+
+																</c:if>
+															</h4>
+
 															</section>
 															<div class="clearfix"></div></li>
 													</a>

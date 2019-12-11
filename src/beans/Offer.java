@@ -14,6 +14,8 @@ public class Offer {
 
 	private long productId;
 
+	private boolean expired;
+
 	private Product product;
 
 	public long getId() {
@@ -41,8 +43,9 @@ public class Offer {
 	}
 
 	public Product getProduct() {
-
-		return product = ProductRepository.findProduct(productId);
+		
+		product = ProductRepository.findProduct(productId);
+		return product;
 	}
 
 	@Override
@@ -56,6 +59,14 @@ public class Offer {
 
 	public void setProductId(long productId) {
 		this.productId = productId;
+	}
+
+	public boolean getExpired() {
+		return expired;
+	}
+
+	public void setExpired(boolean expired) {
+		this.expired = expired;
 	}
 
 }
