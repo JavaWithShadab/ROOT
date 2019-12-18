@@ -2,16 +2,20 @@
 <html lang="en">
 <head>
 <title>stepzart | Sign in</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <!-- bootstrap-CSS -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-select.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/bootstrap-select.css">
 <!-- bootstrap-select-CSS -->
-<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"
-	media="all" />
+<link href="${pageContext.request.contextPath}/css/style.css"
+	rel="stylesheet" type="text/css" media="all" />
 <!-- style.css -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/font-awesome.min.css" />
 <!-- fontawesome-CSS -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/menu_sideslide.css"
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/menu_sideslide.css"
 	type="text/css" media="all">
 <!-- Navigation-CSS -->
 <!-- meta tags -->
@@ -23,7 +27,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="application/x-javascript">
 	
 	
+	
 		 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
 
 
 </script>
@@ -36,7 +42,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	rel='stylesheet' type='text/css'>
 <!--//fonts-->
 <!-- js -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <!-- js -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
@@ -64,15 +71,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- language-select -->
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery.leanModal.min.js"></script>
-<link href="${pageContext.request.contextPath}/css/jquery.uls.css" rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/css/jquery.uls.grid.css" rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/css/jquery.uls.lcd.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/css/jquery.uls.css"
+	rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/css/jquery.uls.grid.css"
+	rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/css/jquery.uls.lcd.css"
+	rel="stylesheet" />
 <!-- Source -->
 <script src="${pageContext.request.contextPath}/js/jquery.uls.data.js"></script>
-<script src="${pageContext.request.contextPath}/js/jquery.uls.data.utils.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js/jquery.uls.data.utils.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.uls.lcd.js"></script>
-<script src="${pageContext.request.contextPath}/js/jquery.uls.languagefilter.js"></script>
-<script src="${pageContext.request.contextPath}/js/jquery.uls.regionfilter.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js/jquery.uls.languagefilter.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js/jquery.uls.regionfilter.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.uls.core.js"></script>
 <script>
 	$(document).ready(function() {
@@ -102,34 +115,34 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </head>
 <body onload="onSignInLoad()">
 
-<!-- header -->
-<header>
-	<div class="w3ls-header">
-		<!--header-one-->
-		<div class="w3ls-header-left">
-			<p>
-				<span style="color: white;"> ${sessionScope.User.name }</span>
-				&nbsp; &nbsp; <a href="index.jsp"><i class="fa fa-home" aria-hidden="true"></i>
-</i>Home </a>
-			</p>
-		</div>
-		
-
-		<div class="clearfix"></div>
-	</div>
-	<div class="container">
-		<div class="agile-its-header">
-			<div class="logo">
-				<h1>
-					<a href="${pageContext.request.contextPath}/index.jsp"><span>Step</span>zart</a>
-				</h1>
+	<!-- header -->
+	<header>
+		<div class="w3ls-header">
+			<!--header-one-->
+			<div class="w3ls-header-left">
+				<p>
+					<span style="color: white;"> ${sessionScope.User.name }</span>
+					&nbsp; &nbsp; <a href="index.jsp"><i class="fa fa-home"
+						aria-hidden="true"></i> </i>Home </a>
+				</p>
 			</div>
+
 
 			<div class="clearfix"></div>
 		</div>
-	</div>
-</header>
-<!-- //header -->
+		<div class="container">
+			<div class="agile-its-header">
+				<div class="logo">
+					<h1>
+						<a href="${pageContext.request.contextPath}/index.jsp"><span>Step</span>zart</a>
+					</h1>
+				</div>
+
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</header>
+	<!-- //header -->
 
 
 
@@ -140,7 +153,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div id="agileits-sign-in-page" class="sign-in-wrapper">
 				<div class="agileinfo_signin">
 					<h3>Sign In</h3>
-					<form action="${pageContext.request.contextPath}/user" method="post">
+					<form action="${pageContext.request.contextPath}/user"
+						method="post">
 
 						<input type="hidden" value="SignIn" name="method"> <input
 							type="email" name="email" placeholder="Your Email" required="">
@@ -168,9 +182,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<p class="get-pw">Enter your email address below and
 												we'll send you an email with instructions.</p>
 											<div>
-												<form action="#" method="post">
-													<input type="text" class="user" name="email"
+												<form action="${pageContext.request.contextPath}/user"
+													method="post">
+
+													<input type="hidden" value="ResetPassword" name="method">
+													<input type="text" class="user" name="Email"
 														placeholder="Email" required=""> <input
+														type="password" class="user" name="Password"
+														placeholder="New Password" required=""> <input
 														type="submit" value="Submit">
 												</form>
 
@@ -218,8 +237,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	});
 </script>
 <!-- start-smoth-scrolling -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/move-top.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/easing.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/move-top.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/easing.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
 		$(".scroll").click(function(event) {
